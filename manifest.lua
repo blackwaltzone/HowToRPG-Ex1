@@ -9,12 +9,16 @@ manifest =
         {
             path = "main.lua"
         },
+        ['example_map.lua'] =
+        {
+            path = "example_map.lua"
+        }
     },
     textures =
     {
-        ['grass_tile.png'] =
+        ['atlas.png'] =
         {
-            path = "grass_tile.png",
+            path = "images/atlas.png",
         },
     }
 }
