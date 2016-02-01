@@ -46,4 +46,5 @@ function CreateMap1()
         }
       }
     }
-}
+  }
+end
