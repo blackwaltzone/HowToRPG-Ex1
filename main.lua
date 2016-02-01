@@ -12,18 +12,20 @@ gTileHeight = gTexture:GetHeight()
 gDisplayWidth = System.ScreenWidth()
 gDisplayHeight = System.ScreenHeight()
 
+gTop = gDisplayHeight / 2 - gTileHeight / 2
+gLeft = -gDisplayWidth / 2 + gTileWidth / 2
+
 gTilesPerRow = math.ceil(gDisplayWidth/gTileWidth)
 gTilesPerColumn = math.max(gDisplayHeight/gTileHeight)
 
+gTileSprite = Sprite.Create()
+gTileSprite:SetTexture(gTexture)
 
 function update()
-    local y = 0
-    local x = -100
-    gRenderer:DrawText2d(x, y, "Display Width: " .. gDisplayWidth)
-    y = y + 30
-    gRenderer:DrawText2d(x, y, "Display Height: " .. gDisplayHeight)
-    y = y + 30
-    gRenderer:DrawText2d(x, y, "Tiles per row: " .. math.ceil(gDisplayWidth/gTileWidth))
-    y = y + 30
-    gRenderer:DrawText2d(x, y, "Tiles per column: " .. math.ceil(gDisplayHeight/gTileHeight))
+    for j = 0, gTilesPerColumn - 1 do
+        for i = 0, gTilesPerRow - 1 do
+            gTileSprite:SetPosition(gLeft + i * gTileWidth, gTop - j * gTileHeight)
+            gRenderer:DrawSprite(gTileSprite)
+        end
+    end
 end
