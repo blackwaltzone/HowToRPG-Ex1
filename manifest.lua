@@ -9,9 +9,9 @@ manifest =
         {
             path = "main.lua"
         },
-        ['example_map.lua'] =
+        ['example_map1.lua'] =
         {
-            path = "example_map.lua"
+            path = "example_map1.lua"
         }
     },
     textures =
