@@ -72,6 +72,18 @@ function Map:GetTile(x, y)
 end
 
 
+function Map:GoTo(x, y)
+	self.mCamX = x - System.ScreenWidth() / 2
+	self.mCamY = -y + System.ScreenHeight() / 2
+end
+
+
+function Map:GoToTile(x, y)
+	self:GoTo((x * self.mTileWidth) + self.mTileWidth / 2,
+			  (y * self.mTileHeight) + self.mTileHeight / 2)
+end
+
+
 function Map:Render(renderer)
 
     local x = self.mX - self.mOffsetX
