@@ -9,25 +9,29 @@ manifest =
         {
             path = "main.lua"
         },
-        ['Map.lua'] = 
+        ['Map.lua'] =
         {
             path = "Map.lua"
+        },
+        ['Util.lua'] =
+        {
+            path = "Util.lua"
+        },
+        ['Entity.lua'] =
+        {
+            path = "Entity.lua"
         },
         ['small_room.lua'] =
         {
             path = "small_room.lua"
-        },
-        ['Util.lua'] = 
-        {
-            path = "Util.lua"
         }
     },
     textures =
     {
-    	['walk_cycle.png']
-    	{
-    		path = "walk_cycle.png",
-    	},
+        ['walk_cycle.png'] =
+        {
+            path = "walk_cycle.png",
+        },
         ['rpg_indoor.png'] =
         {
             path = "rpg_indoor.png",
