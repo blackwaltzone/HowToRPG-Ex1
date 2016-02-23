@@ -13,9 +13,9 @@ manifest =
         {
             path = "Map.lua"
         },
-        ['larger_map.lua'] =
+        ['small_room.lua'] =
         {
-            path = "larger_map.lua"
+            path = "small_room.lua"
         },
         ['Util.lua'] = 
         {
@@ -24,9 +24,13 @@ manifest =
     },
     textures =
     {
-        ['cave16x16.png'] =
+    	['walk_cycle.png']
+    	{
+    		path = "walk_cycle.png",
+    	},
+        ['rpg_indoor.png'] =
         {
-            path = "cave16x16.png",
+            path = "rpg_indoor.png",
         },
     }
 }

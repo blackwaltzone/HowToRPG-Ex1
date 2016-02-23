@@ -45,6 +45,13 @@ function Map:Create(mapDef)
 	return this
 end
 
+
+function Map:GetTileFoot(x, y)
+	return self.mX + (x * self.mTileWidth),
+		   self.mY - (y * self.mTileHeight) - self.mTileHeight / 2
+end
+
+
 function Map:PointToTile(x, y)
 
 	-- Tiles are rendered from the center, so we adjust for this
