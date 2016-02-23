@@ -29,6 +29,9 @@ local gMap = Map:Create(CreateMap())
 gRenderer = Renderer:Create()
 
 
+gMap:GoToTile(5, 5)
+
+
 local heroDef =
 {
 	texture  	= "walk_cycle.png",
@@ -42,27 +45,13 @@ local heroDef =
 gHero = Entity:Create(heroDef)
 
 
-gMap:GoToTile(5, 5)
-
-
 function Teleport(entity, map)
-	local x, y = map:GetTileFoot(entity.mTileX, entity.mTileY)
-	entity.mSprite:SetPosition(x, y + heroHeight / 2)
+    local x, y = map:GetTileFoot(entity.mTileX, entity.mTileY)
+    entity.mSprite:SetPosition(x, y + entity.mHeight / 2)
 end
-Teleport(gHero, gMap)
 
-gHeroTexture = Texture.Find("walk_cycle.png")
-local heroWidth = 16	-- pixels
-local heroHeight= 24
-gHeroUVs = GenerateUVs(heroWidth, heroHeight, gHeroTexture)
-gHeroSprite = Sprite:Create()
-gHeroSprite:SetTexture(gHeroTexture)
--- 9 is the hero facing forward
-gHeroSprite:SetUVs(unpack(gHeroUVs[9]))
--- 10, 2 is the tile in front of the door
-gHeroX = 10
-gHeroY = 2
-Teleport(gHeroX, gHeroY, gMap)
+
+Teleport(gHero, gMap)
 
 
 function update()
