@@ -36,6 +36,14 @@ function Map:Create(mapDef)
                             mapDef.tilesets[1].tileheight,
                             this.mTextureAtlas)
 
+    -- assign blocking tile id
+    for _, v in ipairs(mapDef.tilesets) do
+        if v.name == "collision_graphic" then
+            this.mBlockingTile = v.firstgid
+        end
+    end
+    assert(this.mBlockingTile)
+
     setmetatable(this, self)
 
     return this
@@ -76,10 +84,18 @@ function Map:PointToTile(x, y)
     return tileX, tileY
 end
 
-function Map:GetTile(x, y)
+function Map:GetTile(x, y, layer)
+    local layer = layer or 1
+    local tiles = self.mMapDef.layers[layer].data
     x = x + 1 -- change from  1 -> rowsize
               -- to           0 -> rowsize - 1
-    return self.mTiles[x + y * self.mWidth]
+    return tiles[x + y * self.mWidth]
+end
+
+function Map:IsBlocked(layer, tileX, tileY)
+    -- Collision layer should always be 1 above the official layer
+    local tile = self:GetTile(tileX, tileY, layer + 1)
+    return tile == self.mBlockingTile
 end
 
 function Map:Render(renderer)
