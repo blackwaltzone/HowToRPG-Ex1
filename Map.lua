@@ -1,3 +1,9 @@
+------------
+-- Map.lua
+-- 
+-- Feb 26, 2016
+-- with collision detection
+------------
 
 Map = {}
 Map.__index = Map
