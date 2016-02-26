@@ -21,6 +21,26 @@ manifest =
         {
             path = "Entity.lua"
         },
+        ['Animation.lua'] = 
+        {
+            path = "Animation.lua"
+        },
+        ['StateMachine.lua'] =
+        {
+            path = "StateMachine.lua"
+        },
+        ['WaitState.lua'] =
+        {
+            path = "WaitState.lua"
+        },
+        ['MoveState.lua'] =
+        {
+            path = "MoveState.lua"
+        },
+        ['Tween.lua'] =
+        {
+            path = "Tween.lua"
+        },
         ['small_room.lua'] =
         {
             path = "small_room.lua"
