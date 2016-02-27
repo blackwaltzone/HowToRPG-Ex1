@@ -54,25 +54,27 @@ function MoveState:Enter(data)
         self.mMoveY = 0
         self.mEntity:SetFrame(self.mAnim:Frame())
         self.mController:Change(self.mCharacter.mDefaultState)
+        return
     end
-end
-
-function MoveState:Exit()
 
     if self.mMoveX ~= 0 or self.mMoveY ~= 0 then
         local trigger = self.mMap:GetTrigger(self.mEntity.mLayer,
                                             self.mEntity.mTileX,
                                             self.mEntity.mTileY)
-        print('left tile', self.mEntity.mTileX, self.mEntity.mTileY, trigger)
         if trigger then
             trigger:OnExit(self.mEntity)
         end
     end
 
-    self.mEntity.mTileX = self.mEntity.mTileX + self.mMoveX
-    self.mEntity.mTileY = self.mEntity.mTileY + self.mMoveY
-    Teleport(self.mEntity, self.mMap)
+    self.mEntity:SetTilePos(self.mEntity.mTileX + self.mMoveX,
+                            self.mEntity.mTileY + self.mMoveY,
+                            self.mEntity.mLayer,
+                            self.mMap)
+    self.mEntity.mSprite:SetPosition(pixelPos)
+end
 
+
+function MoveState:Exit()
 
     local trigger = self.mMap:GetTrigger(self.mEntity.mLayer,
                                          self.mEntity.mTileX,
@@ -96,8 +98,8 @@ function MoveState:Update(dt)
     local x = self.mPixelX + (value * self.mMoveX)
     local y = self.mPixelY - (value * self.mMoveY)
     self.mEntity.mX = math.floor(x)
-    self.mEntity.mY = math.floor(y)
-    self.mEntity.mSprite:SetPosition(self.mEntity.mX , self.mEntity.mY)
+self.mEntity.mY = math.floor(y)
+self.mEntity.mSprite:SetPosition(self.mEntity.mX , self.mEntity.mY)
 
     if self.mTween:IsFinished() then
         self.mController:Change(self.mCharacter.mDefaultState)

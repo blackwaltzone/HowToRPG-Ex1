@@ -19,8 +19,9 @@ function Map:Create(mapDef)
         mTiles = layer.data,
         mTileWidth = mapDef.tilesets[1].tilewidth,
         mTileHeight = mapDef.tilesets[1].tileheight,
-        mTriggers = {}
-
+        mTriggers = {},
+        mEntities = {},
+        mNPCs = {}
     }
     this.mTileSprite:SetTexture(this.mTextureAtlas)
 
@@ -48,7 +49,44 @@ function Map:Create(mapDef)
 
     setmetatable(this, self)
 
+    for _, v in ipairs(mapDef.on_wake or {}) do
+        local action = Actions[v.id]
+        action(this, unpack(v.params))()
+    end
+
     return this
+end
+
+function Map:GetEntity(x, y, layer)
+    if not self.mEntities[layer] then
+        return nil
+    end
+    local index = self:CoordToIndex(x, y)
+    return self.mEntities[layer][index]
+end
+
+function Map:AddEntity(entity)
+
+    -- Add the layer if it doesn't exist
+    if not self.mEntities[entity.mLayer] then
+        self.mEntities[entity.mLayer] = {}
+    end
+
+    local layer = self.mEntities[entity.mLayer]
+    local index = self:CoordToIndex(entity.mTileX, entity.mTileY)
+
+    assert(layer[index] == entity or layer[index] == nil)
+    layer[index] = entity
+end
+
+function Map:RemoveEntity(entity)
+    -- The layer should exist!
+    assert(self.mEntities[entity.mLayer])
+    local layer = self.mEntities[entity.mLayer]
+    local index = self:CoordToIndex(entity.mTileX, entity.mTileY)
+    -- The entity should be at the position
+    assert(entity == layer[index])
+    layer[index] = nil
 end
 
 function Map:GetTile(x, y, layer)
@@ -79,8 +117,9 @@ end
 function Map:IsBlocked(layer, tileX, tileY)
     -- Collision layer should always be 2 above the official layer
     local tile = self:GetTile(tileX, tileY, layer + 2)
+    local entity = self:GetEntity(tileX, tileY, layer)
     --print(tileX, tileY, layer, tile, tile == self.mBlockingTile)
-    return tile == self.mBlockingTile
+    return tile == self.mBlockingTile or entity ~= nil
 end
 
 function Map:GetTileFoot(x, y)
@@ -130,7 +169,7 @@ function Map:Render(renderer)
 end
 
 
-function Map:RenderLayer(renderer, layer)
+function Map:RenderLayer(renderer, layer, hero)
 
     -- Our layers are made of 3 sections
     -- We want the index to point to the tile layer of a give section
@@ -170,7 +209,18 @@ function Map:RenderLayer(renderer, layer)
                 self.mTileSprite:SetUVs(unpack(uvs))
                 renderer:DrawSprite(self.mTileSprite)
             end
+        end
 
+        local entLayer = self.mEntities[layer] or {}
+        local drawList = { hero }
+
+        for _, j in pairs(entLayer) do
+            table.insert(drawList, j)
+        end
+
+        table.sort(drawList, function(a, b) return a.mTileY < b.mTileY end)
+        for _, j in ipairs(drawList) do
+            renderer:DrawSprite(j.mSprite)
         end
     end
 end
