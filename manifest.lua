@@ -21,10 +21,6 @@ manifest =
         {
             path = "Entity.lua"
         },
-        ['Animation.lua'] = 
-        {
-            path = "Animation.lua"
-        },
         ['StateMachine.lua'] =
         {
             path = "StateMachine.lua"
@@ -41,10 +37,30 @@ manifest =
         {
             path = "Tween.lua"
         },
+        ['Actions.lua'] =
+        {
+            path = "Actions.lua"
+        },
         ['small_room.lua'] =
         {
             path = "small_room.lua"
-        }
+        },
+        ['Animation.lua'] =
+        {
+            path = "Animation.lua"
+        },
+        ['Trigger.lua'] =
+        {
+            path = "Trigger.lua"
+        },
+        ['EntityDefs.lua'] = 
+        {
+            path = "EntityDefs.lua"
+        },
+        ['Character.lua'] =
+        {
+            path = "Character.lua"
+        },
     },
     textures =
     {
