@@ -33,34 +33,42 @@ manifest =
         {
             path = "MoveState.lua"
         },
+        ['NPCStandState.lua'] =
+        {
+            path = "NPCStandState.lua"
+        },
+        ['PlanStrollState.lua'] =
+        {
+            path = "PlanStrollState.lua"
+        },
         ['Tween.lua'] =
         {
             path = "Tween.lua"
-        },
-        ['Actions.lua'] =
-        {
-            path = "Actions.lua"
-        },
-        ['small_room.lua'] =
-        {
-            path = "small_room.lua"
         },
         ['Animation.lua'] =
         {
             path = "Animation.lua"
         },
+        ['Actions.lua'] =
+        {
+            path = "Actions.lua"
+        },
         ['Trigger.lua'] =
         {
             path = "Trigger.lua"
-        },
-        ['EntityDefs.lua'] = 
-        {
-            path = "EntityDefs.lua"
         },
         ['Character.lua'] =
         {
             path = "Character.lua"
         },
+        ['EntityDefs.lua'] =
+        {
+            path = "EntityDefs.lua"
+        },
+        ['small_room.lua'] =
+        {
+            path = "small_room.lua"
+        }
     },
     textures =
     {

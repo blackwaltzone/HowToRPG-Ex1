@@ -26,6 +26,8 @@ Asset.Run("Entity.lua")
 Asset.Run("StateMachine.lua")
 Asset.Run("MoveState.lua")
 Asset.Run("WaitState.lua")
+Asset.Run("NPCStandState.lua")
+Asset.Run("PlanStrollState.lua")
 Asset.Run("Tween.lua")
 Asset.Run("Actions.lua")
 Asset.Run("Trigger.lua")
@@ -40,6 +42,9 @@ gRenderer = Renderer:Create()
 gMap:GoToTile(5, 5)
 
 gHero = Character:Create(gCharacters.hero, gMap)
+gNPC = Character:Create(gCharacters.strolling_npc, gMap)
+
+Actions.Teleport(gMap, 11, 5)(nil, gNPC.mEntity)
 
 gUpDoorTeleport = Actions.Teleport(gMap, 11, 3)
 gDownDoorTeleport = Actions.Teleport(gMap, 10, 11)
@@ -118,9 +123,13 @@ function update()
         if i == gHero.mEntity.mLayer then
             gRenderer:DrawSprite(gHero.mEntity.mSprite)
         end
+        if i == gNPC.mEntity.mLayer then
+        	gRenderer:DrawSprite(gNPC.mEntity.mSprite)
+        end
     end
 
     gHero.mController:Update(dt)
+    gNPC.mController:Update(dt)
 
     if Keyboard.JustPressed(KEY_SPACE) then
         -- which way is the player facing?
