@@ -68,7 +68,11 @@ manifest =
         ['small_room.lua'] =
         {
             path = "small_room.lua"
-        }
+        },
+        ['Panel.lua'] =
+        {
+            path = "Panel.lua"
+        },
     },
     textures =
     {
