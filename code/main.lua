@@ -10,144 +10,51 @@
 --
 ----------------------
 
-LoadLibrary("Renderer")
-LoadLibrary("Sprite")
-LoadLibrary("System")
-LoadLibrary("Texture")
-LoadLibrary("Vector")
-LoadLibrary("Asset")
-LoadLibrary("Keyboard")
+LoadLibrary('Asset')
+Asset.Run('Dependencies.lua')
 
-
-Asset.Run("Animation.lua")
-Asset.Run("Map.lua")
-Asset.Run("Util.lua")
-Asset.Run("Entity.lua")
-Asset.Run("StateMachine.lua")
-Asset.Run("MoveState.lua")
-Asset.Run("WaitState.lua")
-Asset.Run("NPCStandState.lua")
-Asset.Run("PlanStrollState.lua")
-Asset.Run("Tween.lua")
-Asset.Run("Actions.lua")
-Asset.Run("Trigger.lua")
-Asset.Run("EntityDefs.lua")
-Asset.Run("Character.lua")
-Asset.Run("small_room.lua")
-
+gRenderer = Renderer.Create()
 
 local mapDef = CreateMap()
-mapDef.on_wake =
-{
+mapDef.on_wake = {}
+mapDef.actions = {}
+mapDef.trigger_types = {}
+mapDef.triggers = {}
+
+-- 11, 3, 1 == x, y, layer
+
+
+local CreateBlock = function(stack)
+	return
 	{
-		id = "AddNPC",
-		params = {{ def = "strolling_npc", x = 11, y = 5 }},
-	},
-	{
-		id = "AddNPC",
-		params = {{ def = "standing_npc", x = 4, y = 5 }},
-	},
-}
-mapDef.actions =
-{
-	tele_south = { id = "Teleport", params = {11, 3} },
-	tele_north = { id = "Teleport", params = {10, 11} }
-}
-mapDef.trigger_types =
-{
-	north_door_trigger = { OnEnter = "tele_north" },
-	south_door_trigger = { OnEnter = "tele_south" }
-}
-mapDef.triggers =
-{
-	{ trigger = "north_door_trigger", x = 11, y = 2 },
-	{ trigger = "south_door_trigger", x = 10, y = 12 }
-}
-local gMap = Map:Create(mapDef)
-
-gRenderer = Renderer:Create()
-
-gMap:GoToTile(5, 5)
-
-gHero = Character:Create(gCharacters.hero, gMap)
-gHero.mEntity:SetTilePos(11, 3, 1, gMap)
-
-
-function GetFacedTileCoords(character)
-
-    -- Change the facing information into a tile offset
-    local xInc = 0
-    local yInc = 0
-
-    if character.mFacing == "left" then
-        xInc = 1
-    elseif character.mFacing == "right" then
-        xInc = -1
-    elseif character.mFacing == "up" then
-        yInc = -1
-    elseif character.mFacing == "down" then
-        yInc = 1
-    end
-
-    local x = character.mEntity.mTileX + xInc
-    local y = character.mEntity.mTileY + yInc
-
-    return x, y
+		Enter = function() end,
+		Exit = function() end, 
+		HandleInput = function(self)
+			stack:Pop()
+		end,
+		Render = function() end,
+		Update = function(self)
+			return false
+		end
+	}
 end
 
+local stack = StateStack:Create()
+local state = ExploreState:Create(stack, mapDef, Vector.Create(11, 3, 1))
+stack:Push(state)
 
-gMessage = "Hello There"
+
+stack:Push(FadeState:Create(stack))
+stack:Push(CreateBlock(stack))
+stack:PushFit(gRenderer, 0, 0, "Where am I?")
+stack:Push(CreateBlock(stack))
+stack:PushFit(gRenderer, -50, 50, "My head hurts!")
+stack:Push(CreateBlock(stack))
+stack:PushFit(gRenderer, -100, 100, "Uh...")
+
 
 function update()
-
     local dt = GetDeltaTime()
-
-    local playerPos = gHero.mEntity.mSprite:GetPosition()
-    gMap.mCamX = math.floor(playerPos:X())
-    gMap.mCamY = math.floor(playerPos:Y())
-
-    gRenderer:Translate(-gMap.mCamX, -gMap.mCamY)
-
-    local layerCount = gMap:LayerCount()
-
-    for i = 1, layerCount do
-
-    	local heroEntity = nil
-    	if i == gHero.mEntity.mLayer then
-    		heroEntity = gHero.mEntity
-    	end
-
-    	gMap:RenderLayer(gRenderer, i, heroEntity)
-    end
-
-    gHero.mController:Update(dt)
-    --gNPC.mController:Update(dt)
-    for k, v in ipairs(gMap.mNPCs) do
-    	v.mController:Update(dt)
-    end
-
-    if Keyboard.JustPressed(KEY_SPACE) then
-        -- which way is the player facing?
-        local x, y = GetFacedTileCoords(gHero)
-        local trigger = gMap:GetTrigger(gHero.mEntity.mLayer, x, y)
-        if trigger then
-            trigger:OnUse(gHero)
-        end
-    end
-
-    gRenderer:DrawRect2d(
-        gMap.mCamX-System.ScreenWidth()/2,
-        gMap.mCamY+System.ScreenHeight()/2,
-        gMap.mCamX+ System.ScreenWidth()/2,
-        gMap.mCamY+System.ScreenHeight()/2 - 60,
-        Vector.Create(0, 0, 0, 1)
-    )
-
-    local y =  gMap.mCamY+System.ScreenHeight()/2 - 30
-    gRenderer:AlignText("center", "center")
-    gRenderer:DrawText2d(gMap.mCamX, y, gMessage, Vector.Create(1,1,1,1))
-
-    gRenderer:AlignTextX("left")
-    gRenderer:DrawText2d(-30, 150, "Try using the pot (USE = space key)", Vector.Create(1,1,1,1), 175)
-
+    stack:Update(dt)
+    stack:Render(gRenderer)
 end

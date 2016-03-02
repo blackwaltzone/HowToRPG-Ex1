@@ -52,8 +52,9 @@ function Map:Create(mapDef)
     --
     this.mActions = {}
     for name, def in pairs(mapDef.actions or {}) do
-        -- look up the action and create the action-function
-        -- the action takes in the map as the first param
+
+        -- Look up the action and create the action-function
+        -- The action takes in the map as the first param
         assert(Actions[def.id])
         local action = Actions[def.id](this, unpack(def.params))
         this.mActions[name] = action
@@ -72,6 +73,7 @@ function Map:Create(mapDef)
         end
         this.mTriggerTypes[k] = Trigger:Create(triggerParams)
     end
+
 
     setmetatable(this, self)
 
