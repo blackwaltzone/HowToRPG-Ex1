@@ -5,84 +5,124 @@ manifest =
 {
     scripts =
     {
-        ['main.lua'] =
-        {
-            path = "main.lua"
-        },
-        ['Map.lua'] =
-        {
-            path = "Map.lua"
-        },
-        ['Util.lua'] =
-        {
-            path = "Util.lua"
-        },
-        ['Entity.lua'] =
-        {
-            path = "Entity.lua"
-        },
-        ['StateMachine.lua'] =
-        {
-            path = "StateMachine.lua"
-        },
-        ['WaitState.lua'] =
-        {
-            path = "WaitState.lua"
-        },
-        ['MoveState.lua'] =
-        {
-            path = "MoveState.lua"
-        },
-        ['NPCStandState.lua'] =
-        {
-            path = "NPCStandState.lua"
-        },
-        ['PlanStrollState.lua'] =
-        {
-            path = "PlanStrollState.lua"
-        },
-        ['Tween.lua'] =
-        {
-            path = "Tween.lua"
-        },
-        ['Animation.lua'] =
-        {
-            path = "Animation.lua"
-        },
         ['Actions.lua'] =
         {
-            path = "Actions.lua"
-        },
-        ['Trigger.lua'] =
-        {
-            path = "Trigger.lua"
+            path = "code/Actions.lua"
         },
         ['Character.lua'] =
         {
-            path = "Character.lua"
+            path = "code/Character.lua"
+        },
+        ['Dependencies.lua'] =
+        {
+            path = "code/Dependencies.lua"
+        },
+        ['Entity.lua'] =
+        {
+            path = "code/Entity.lua"
         },
         ['EntityDefs.lua'] =
         {
-            path = "EntityDefs.lua"
+            path = "code/EntityDefs.lua"
         },
-        ['small_room.lua'] =
+        ['ExploreState.lua'] =
         {
-            path = "small_room.lua"
+            path = "code/ExploreState.lua"
+        },
+        ['FadeState.lua'] =
+        {
+            path = "code/FadeState.lua"
+        },
+        ['main.lua'] =
+        {
+            path = "code/main.lua"
+        },
+        ['Map.lua'] =
+        {
+            path = "code/Map.lua"
+        },
+        ['MoveState.lua'] =
+        {
+            path = "code/MoveState.lua"
+        },
+        ['NPCStandState.lua'] =
+        {
+            path = "code/NPCStandState.lua"
         },
         ['Panel.lua'] =
         {
-            path = "Panel.lua"
+            path = "code/Panel.lua"
+        },
+        ['PlanStrollState.lua'] =
+        {
+            path = "code/PlanStrollState.lua"
+        },
+        ['ProgressBar.lua'] =
+        {
+            path = "code/ProgressBar.lua"
+        },
+        ['Selection.lua'] =
+        {
+            path = "code/Selection.lua"
+        },
+        ['small_room.lua'] =
+        {
+            path = "code/small_room.lua"
+        },
+        ['StateMachine.lua'] =
+        {
+            path = "code/StateMachine.lua"
+        },
+        ['StateStack.lua'] =
+        {
+            path = "code/StateStack.lua"
+        },
+        ['Textbox.lua'] =
+        {
+            path = "code/Textbox.lua"
+        },
+        ['Trigger.lua'] =
+        {
+            path = "code/Trigger.lua"
+        },
+        ['Tween.lua'] =
+        {
+            path = "code/Tween.lua"
+        },
+        ['Animation.lua'] =
+        {
+            path = "code/Animation.lua"
+        },
+        ['Util.lua'] =
+        {
+            path = "code/Util.lua"
+        },
+        ['WaitState.lua'] =
+        {
+            path = "code/WaitState.lua"
         },
     },
     textures =
     {
         ['walk_cycle.png'] =
         {
-            path = "walk_cycle.png",
+            path = "art/walk_cycle.png",
         },
         ['rpg_indoor.png'] =
         {
-            path = "rpg_indoor.png",
+            path = "art/rpg_indoor.png",
+        },
+        ['cursor.png'] =
+        {
+            path = "art/cursor.png",
+        },
+        ['gradient_panel.png'] =
+        {
+            path = "art/gradient_panel.png",
+        },
+        ['continue_caret.png'] =
+        {
+            path = "art/continue_caret.png",
         },
     }
 }

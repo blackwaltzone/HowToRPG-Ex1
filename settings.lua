@@ -1,5 +1,5 @@
 
-name = "Small Empty Room"
+name = "Menu - StateStack"
 width = 256 * 2
 height = 224 * 2
 manifest = "manifest.lua"
