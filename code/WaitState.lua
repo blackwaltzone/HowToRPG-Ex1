@@ -1,4 +1,4 @@
-WaitState = { mName = "wait" }
+WaitState = {mName = "wait"}
 WaitState.__index = WaitState
 function WaitState:Create(character, map)
     local this =
@@ -7,7 +7,7 @@ function WaitState:Create(character, map)
         mMap = map,
         mEntity = character.mEntity,
         mController = character.mController,
-        
+
         mFrameResetSpeed = 0.05,
         mFrameCount = 0
     }
@@ -17,18 +17,17 @@ function WaitState:Create(character, map)
 end
 
 function WaitState:Enter(data)
-    -- Reset to default frame
-    -- self.mEntity:SetFrame(self.mEntity.mStartFrame)
     self.mFrameCount = 0
 end
+
 
 function WaitState:Render(renderer) end
 function WaitState:Exit() end
 
 function WaitState:Update(dt)
 
-    -- If we're waiting in the wait state for a few frames, reset the frame
-    -- to the starting frame
+    -- If we're in the wait state for a few frames, reset the frame to
+    -- the starting frame.
     if self.mFrameCount ~= -1 then
         self.mFrameCount = self.mFrameCount + dt
         if self.mFrameCount >= self.mFrameResetSpeed then
@@ -37,7 +36,7 @@ function WaitState:Update(dt)
             self.mCharacter.mFacing = "down"
         end
     end
-    
+
     if Keyboard.Held(KEY_LEFT) then
         self.mController:Change("move", {x = -1, y = 0})
     elseif Keyboard.Held(KEY_RIGHT) then
