@@ -33,6 +33,30 @@ manifest =
         {
             path = "code/FadeState.lua"
         },
+        ['FrontMenuState.lua'] =
+        {
+            path = "code/FrontMenuState.lua"
+        },
+        ['ItemMenuState.lua'] =
+        {
+            path = "code/ItemMenuState.lua"
+        },
+        ['ItemDB.lua'] =
+        {
+            path = "code/ItemDB.lua"
+        },
+        ['InGameMenuState.lua'] =
+        {
+            path = "code/InGameMenuState.lua"
+        },
+        ['Icons.lua'] =
+        {
+            path = "code/Icons.lua"
+        },
+        ['Layout.lua'] =
+        {
+            path = "code/Layout.lua"
+        },
         ['main.lua'] =
         {
             path = "code/main.lua"
@@ -60,6 +84,10 @@ manifest =
         ['ProgressBar.lua'] =
         {
             path = "code/ProgressBar.lua"
+        },
+        ['Scrollbar.lua'] =
+        {
+            path = "code/Scrollbar.lua"
         },
         ['Selection.lua'] =
         {
@@ -101,6 +129,10 @@ manifest =
         {
             path = "code/WaitState.lua"
         },
+        ['World.lua'] =
+        {
+            path = "code/World.lua"
+        },
     },
     textures =
     {
@@ -123,6 +155,14 @@ manifest =
         ['continue_caret.png'] =
         {
             path = "art/continue_caret.png",
+        },
+        ['scrollbar.png'] =
+        {
+            path = "art/scrollbar.png",
+        },
+        ['inventory_icons.png'] =
+        {
+            path = "art/inventory_icons.png",
         },
     }
 }

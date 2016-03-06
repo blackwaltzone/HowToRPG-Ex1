@@ -1,7 +1,7 @@
 
 name = "Menu - StateStack"
-width = 256 * 2
-height = 224 * 2
+width = 1280/2
+height = 720/2
 manifest = "manifest.lua"
 main_script = "main.lua"
 on_update = "update()"
