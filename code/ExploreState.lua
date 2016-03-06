@@ -76,4 +76,9 @@ function ExploreState:HandleInput()
         end
     end
 
+    if Keyboard.JustPressed(KEY_LALT) then
+        local menu = InGameMenuState:Create(self.mStack)
+        return self.mStack:Push(menu)
+    end
+
 end
