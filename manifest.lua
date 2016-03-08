@@ -13,6 +13,14 @@ manifest =
         {
             path = "code/Character.lua"
         },
+        ['CaptionState.lua'] =
+        {
+            path = "code/CaptionState.lua"
+        },
+        ['CaptionStyles.lua'] =
+        {
+            path = "code/CaptionStyles.lua"
+        },
         ['Dependencies.lua'] =
         {
             path = "code/Dependencies.lua"
@@ -28,10 +36,6 @@ manifest =
         ['ExploreState.lua'] =
         {
             path = "code/ExploreState.lua"
-        },
-        ['FadeState.lua'] =
-        {
-            path = "code/FadeState.lua"
         },
         ['FrontMenuState.lua'] =
         {
@@ -65,6 +69,10 @@ manifest =
         {
             path = "code/Map.lua"
         },
+        ['MapDB.lua'] =
+        {
+            path = "code/MapDB.lua"
+        },
         ['MoveState.lua'] =
         {
             path = "code/MoveState.lua"
@@ -81,9 +89,17 @@ manifest =
         {
             path = "code/PlanStrollState.lua"
         },
+        ['map_sontos_house.lua'] =
+        {
+            path = "code/map_sontos_house.lua"
+        },
         ['ProgressBar.lua'] =
         {
             path = "code/ProgressBar.lua"
+        },
+        ['ScreenState.lua'] =
+        {
+            path = "code/ScreenState.lua"
         },
         ['Scrollbar.lua'] =
         {
@@ -93,10 +109,6 @@ manifest =
         {
             path = "code/Selection.lua"
         },
-        ['small_room.lua'] =
-        {
-            path = "code/small_room.lua"
-        },
         ['StateMachine.lua'] =
         {
             path = "code/StateMachine.lua"
@@ -104,6 +116,14 @@ manifest =
         ['StateStack.lua'] =
         {
             path = "code/StateStack.lua"
+        },
+        ['Storyboard.lua'] =
+        {
+            path = "code/Storyboard.lua"
+        },
+        ['StoryboardEvents.lua'] =
+        {
+            path = "code/StoryboardEvents.lua"
         },
         ['Textbox.lua'] =
         {
@@ -140,9 +160,9 @@ manifest =
         {
             path = "art/walk_cycle.png",
         },
-        ['rpg_indoor.png'] =
+        ['tileset_sontos_house.png'] =
         {
-            path = "art/rpg_indoor.png",
+            path = "art/tileset_sontos_house.png",
         },
         ['cursor.png'] =
         {
@@ -163,6 +183,24 @@ manifest =
         ['inventory_icons.png'] =
         {
             path = "art/inventory_icons.png",
+        }
+    },
+    ['fonts'] =
+    {
+        ["default"] =
+        {
+            path = "art/junction.ttf",
         },
+        ["title"] =
+        {
+            path = "art/contra_italic.ttf",
+        }
+    },
+    ['sounds'] =
+    {
+        ['rain'] =
+        {
+            path = "sound/rain.wav"
+        }
     }
 }
