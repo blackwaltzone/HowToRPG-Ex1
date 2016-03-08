@@ -12,6 +12,7 @@ Apply({
         "Texture",
         "Vector",
         "Keyboard",
+        "Sound",
     },
     function(v) LoadLibrary(v) end)
 
@@ -30,7 +31,6 @@ Apply({
         "Trigger.lua",
         "EntityDefs.lua",
         "Character.lua",
-        "small_room.lua",
         "Panel.lua",
         "ProgressBar.lua",
         "Selection.lua",
@@ -38,7 +38,6 @@ Apply({
         "Textbox.lua",
         "Scrollbar.lua",
         "ExploreState.lua",
-        "FadeState.lua",
         "Layout.lua",
         "InGameMenuState.lua",
         "FrontMenuState.lua",
@@ -46,5 +45,12 @@ Apply({
         "ItemDB.lua",
         "ItemMenuState.lua",
         "Icons.lua",
+        "Storyboard.lua",
+        "StoryboardEvents.lua",
+        "ScreenState.lua",
+        "CaptionStyles.lua",
+        "CaptionState.lua",
+        "map_sontos_house.lua",
+        "MapDB.lua"
     },
     function(v) Asset.Run(v) end)

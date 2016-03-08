@@ -36,7 +36,7 @@ function ExploreState:Update(dt)
     map.mCamX = math.floor(playerPos:X())
     map.mCamY = math.floor(playerPos:Y())
 
-    hero.mController:Update(dt)
+    --hero.mController:Update(dt)
     for k, v in ipairs(map.mNPCs) do
         v.mController:Update(dt)
     end
@@ -66,6 +66,8 @@ end
 
 function ExploreState:HandleInput()
 
+    self.mHero.mController:Update(GetDeltaTime())
+
     if Keyboard.JustPressed(KEY_SPACE) then
         -- which way is the player facing?
         local x, y = self.mHero:GetFacedTileCoords()
@@ -81,4 +83,22 @@ function ExploreState:HandleInput()
         return self.mStack:Push(menu)
     end
 
+end
+
+function ExploreState:HideHero()
+    self.mHero.mEntity:SetTilePos(
+        self.mHero.mEntity.mTileX,
+        self.mHero.mEntity.mTileY,
+        -1,
+        self.mMap
+    )
+end
+
+function ExploreState:ShowHero(layer)
+    self.mHero.mEntity:SetTilePos(
+        self.mHero.mEntity.mTileX,
+        self.mHero.mEntity,mTileY,
+        layer or 1,
+        self.mMap
+    )
 end
