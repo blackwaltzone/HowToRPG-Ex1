@@ -21,7 +21,8 @@ function Map:Create(mapDef)
         mTileHeight = mapDef.tilesets[1].tileheight,
         mTriggers = {},
         mEntities = {},
-        mNPCs = {}
+        mNPCs = {},
+        mNPCbyId = {},
     }
     this.mTileSprite:SetTexture(this.mTextureAtlas)
 
@@ -267,7 +268,9 @@ function Map:RenderLayer(renderer, layer, hero)
 
         table.sort(drawList, function(a, b) return a.mTileY < b.mTileY end)
         for _, j in ipairs(drawList) do
-            renderer:DrawSprite(j.mSprite)
+            --renderer:DrawSprite(j.mSprite)
+            -- sprites are now responsible for rendering themselves
+            j:Render(renderer)
         end
     end
 end

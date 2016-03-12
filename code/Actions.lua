@@ -12,6 +12,7 @@ Actions =
     -- Note this should be used by the Quest manager!
     --
     AddNPC = function(map, npc)
+        assert(npc.id ~= "hero")    -- reserved npc name
         return function(trigger, entity)
 
             local charDef = gCharacters[npc.def]
@@ -27,6 +28,9 @@ Actions =
             char.mEntity:SetTilePos(x, y, layer, map)
 
             table.insert(map.mNPCs, char)
+            assert(map.mNPCbyId[npc.id] == nil)
+            char.mId = npc.id
+            map.mNPCbyId[npc.id] = char
         end
     end
 }

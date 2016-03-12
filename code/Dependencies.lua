@@ -22,8 +22,10 @@ Apply({
         "Util.lua",
         "Entity.lua",
         "StateMachine.lua",
+        "FollowPathState.lua",
         "MoveState.lua",
         "WaitState.lua",
+        "SleepState.lua",
         "NPCStandState.lua",
         "PlanStrollState.lua",
         "Tween.lua",
@@ -51,6 +53,7 @@ Apply({
         "CaptionStyles.lua",
         "CaptionState.lua",
         "map_sontos_house.lua",
-        "MapDB.lua"
+        "map_jail.lua",
+        "MapDB.lua",
     },
     function(v) Asset.Run(v) end)

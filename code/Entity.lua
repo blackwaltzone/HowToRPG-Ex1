@@ -1,7 +1,5 @@
 Entity = {}
 Entity.__index = Entity
-
-
 function Entity:Create(def)
     local this =
     {
@@ -13,6 +11,9 @@ function Entity:Create(def)
         mTileY = def.tileY,
         mLayer = def.layer,
         mStartFrame = def.startFrame,
+        mX = def.x or 0,
+        mY = def.y or 0,
+        mChildren = {}
     }
 
     this.mSprite:SetTexture(this.mTexture)
@@ -45,5 +46,27 @@ function Entity:SetTilePos(x, y, layer, map)
     map:AddEntity(self)
     local x, y = map:GetTileFoot(self.mTileX, self.mTileY)
     self.mSprite:SetPosition(x, y + self.mHeight / 2)
+    self.mX = x
+    self.mY = y
+
+end
+
+function Entity:AddChild(id, entity)
+    assert(self.mChildren[id] == nil)
+    self.mChildren[id] = entity
+end
+
+function Entity:RemoveChild(id)
+    self.mChildren[id] = nil
+end
+
+function Entity:Render(renderer)
+    renderer:DrawSprite(self.mSprite)
+
+    for k, v in pairs(self.mChildren) do
+        local sprite = v.mSprite
+        sprite:SetPosition(self.mX + v.mX, self.mY + v.mY)
+        renderer:DrawSprite(sprite)
+    end
 
 end

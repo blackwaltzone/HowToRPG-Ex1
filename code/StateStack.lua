@@ -61,7 +61,7 @@ function StateStack:PushFix(renderer, x, y, width, height, text, params)
     local choices = params.choices
 
     local padding = 10
-    local textScale = 1.5
+    local textScale = params.textScale or 1.5
     local panelTileSize = 3
 
     --
@@ -186,7 +186,7 @@ function StateStack:PushFit(renderer, x, y, text, wrap, params)
 
     local padding = 10
     local panelTileSize = 3
-    local textScale = 1.5
+    local textScale = params.textScale or 1.5
 
     renderer:ScaleText(textScale, textScale)
 

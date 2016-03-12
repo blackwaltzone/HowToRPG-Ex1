@@ -20,6 +20,24 @@ function ExploreState:Create(stack, mapDef, startPos)
     return this
 end
 
+function ExploreState:HideHero()
+    self.mHero.mEntity:SetTilePos(
+        self.mHero.mEntity.mTileX,
+        self.mHero.mEntity.mTileY,
+        -1,
+        self.mMap
+    )
+end
+
+function ExploreState:ShowHero(layer)
+     self.mHero.mEntity:SetTilePos(
+        self.mHero.mEntity.mTileX,
+        self.mHero.mEntity.mTileY,
+        layer or 1,
+        self.mMap
+    )
+end
+
 function ExploreState:Enter()
 end
 
@@ -36,7 +54,6 @@ function ExploreState:Update(dt)
     map.mCamX = math.floor(playerPos:X())
     map.mCamY = math.floor(playerPos:Y())
 
-    --hero.mController:Update(dt)
     for k, v in ipairs(map.mNPCs) do
         v.mController:Update(dt)
     end
@@ -83,22 +100,4 @@ function ExploreState:HandleInput()
         return self.mStack:Push(menu)
     end
 
-end
-
-function ExploreState:HideHero()
-    self.mHero.mEntity:SetTilePos(
-        self.mHero.mEntity.mTileX,
-        self.mHero.mEntity.mTileY,
-        -1,
-        self.mMap
-    )
-end
-
-function ExploreState:ShowHero(layer)
-    self.mHero.mEntity:SetTilePos(
-        self.mHero.mEntity.mTileX,
-        self.mHero.mEntity,mTileY,
-        layer or 1,
-        self.mMap
-    )
 end
