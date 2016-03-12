@@ -41,6 +41,10 @@ manifest =
         {
             path = "code/FrontMenuState.lua"
         },
+        ['FollowPathState.lua'] =
+        {
+            path = "code/FollowPathState.lua"
+        },
         ['ItemMenuState.lua'] =
         {
             path = "code/ItemMenuState.lua"
@@ -56,6 +60,10 @@ manifest =
         ['Icons.lua'] =
         {
             path = "code/Icons.lua"
+        },
+        ['map_jail.lua'] =
+        {
+            path = "code/map_jail.lua"
         },
         ['Layout.lua'] =
         {
@@ -108,6 +116,10 @@ manifest =
         ['Selection.lua'] =
         {
             path = "code/Selection.lua"
+        },
+        ['SleepState.lua'] =
+        {
+            path = "code/SleepState.lua"
         },
         ['StateMachine.lua'] =
         {
@@ -164,6 +176,10 @@ manifest =
         {
             path = "art/tileset_sontos_house.png",
         },
+        ['tileset_jail.png'] =
+        {
+            path = "art/tileset_jail.png",
+        },
         ['cursor.png'] =
         {
             path = "art/cursor.png",
@@ -183,6 +199,10 @@ manifest =
         ['inventory_icons.png'] =
         {
             path = "art/inventory_icons.png",
+        },
+        ['sleeping.png'] =
+        {
+            path = "art/sleeping.png",
         }
     },
     ['fonts'] =
@@ -201,6 +221,22 @@ manifest =
         ['rain'] =
         {
             path = "sound/rain.wav"
+        },
+        ['door_break'] =
+        {
+            path = "sound/door_break.wav"
+        },
+        ['bell'] =
+        {
+            path = "sound/bell.wav"
+        },
+        ['wind'] =
+        {
+            path = "sound/wind.wav"
+        },
+        ['wagon'] =
+        {
+            path = "sound/wagon.wav"
         }
     }
 }
