@@ -3,7 +3,6 @@ Trigger = {}
 Trigger.__index = Trigger
 function Trigger:Create(def)
 
-
     local EmptyFunc = function() end
 
     local this =

@@ -5,13 +5,8 @@ function World:Create()
     {
         mTime = 0,
         mGold = 0,
-        mItems =
-        {
-            { id = 1, count = 1 },
-            { id = 2, count = 4 },
-            { id = 3, count = 1 },
-        },
-        mKeyItems = {{id=4}},
+        mItems = {},
+        mKeyItems = {},
     }
     setmetatable(this, self)
     return this

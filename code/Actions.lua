@@ -3,7 +3,7 @@ Actions =
     -- Teleport an entity from the current position to the given position
     Teleport = function(map, tileX, tileY, layer)
         layer = layer or 1
-        return function(trigger, entity)
+        return function(trigger, entity, tX, tY, tLayer)
             entity:SetTilePos(tileX, tileY, layer, map)
         end
     end,
@@ -12,8 +12,8 @@ Actions =
     -- Note this should be used by the Quest manager!
     --
     AddNPC = function(map, npc)
-        assert(npc.id ~= "hero")    -- reserved npc name
-        return function(trigger, entity)
+        assert(npc.id ~= "hero")
+        return function(trigger, entity, tX, tY, tLayer)
 
             local charDef = gCharacters[npc.def]
             assert(charDef) -- Character should always exist!
@@ -31,6 +31,12 @@ Actions =
             assert(map.mNPCbyId[npc.id] == nil)
             char.mId = npc.id
             map.mNPCbyId[npc.id] = char
+        end
+    end,
+
+    RunScript = function(map, Func)
+        return function(trigger, entity, tX, tY, tLayer)
+            Func(map, trigger, entity, tX, tY, tLayer)
         end
     end
 }

@@ -1,4 +1,4 @@
-
+SOP = {}
 
 WaitEvent = {}
 WaitEvent.__index = WaitEvent
@@ -102,19 +102,15 @@ function TimedTextboxEvent:IsFinished()
 end
 
 
-
-
-
-
-function Wait(seconds)
+function SOP.Wait(seconds)
     return function()
         return WaitEvent:Create(seconds)
     end
 end
 
-EmptyEvent = WaitEvent:Create(0)
+local EmptyEvent = WaitEvent:Create(0)
 
-function BlackScreen(id)
+function SOP.BlackScreen(id)
 
     id = id or "blackscreen"
 
@@ -125,7 +121,7 @@ function BlackScreen(id)
     end
 end
 
-function Play(soundName, name, volume)
+function SOP.Play(soundName, name, volume)
     name = name or soundName
     volume = volume or 1
     return function(storyboard)
@@ -136,14 +132,14 @@ function Play(soundName, name, volume)
     end
 end
 
-function Stop(name)
+function SOP.Stop(name)
     return function(storyboard)
         storyboard:StopSound(name)
         return EmptyEvent
     end
 end
 
-function FadeSound(name, start, finish, duration)
+function SOP.FadeSound(name, start, finish, duration)
     return function(storyboard)
 
         local id = storyboard.mPlayingSounds[name]
@@ -157,7 +153,7 @@ function FadeSound(name, start, finish, duration)
     end
 end
 
-function FadeScreen(id, duration, start, finish)
+local function FadeScreen(id, duration, start, finish)
 
     local duration = duration or 3
 
@@ -178,15 +174,15 @@ function FadeScreen(id, duration, start, finish)
     end
 end
 
-function FadeInScreen(id, duration)
+function SOP.FadeInScreen(id, duration)
     return FadeScreen(id, duration, 0, 1)
 end
 
-function FadeOutScreen(id, duration)
+function SOP.FadeOutScreen(id, duration)
     return FadeScreen(id, duration, 1, 0)
 end
 
-function Caption(id, style, text)
+function SOP.Caption(id, style, text)
 
     return function(storyboard)
         local style = ShallowClone(CaptionStyles[style])
@@ -202,7 +198,7 @@ function Caption(id, style, text)
 
 end
 
-function FadeOutCaption(id, duration)
+function SOP.FadeOutCaption(id, duration)
     return function(storyboard)
         local target = storyboard.mSubStack:Top()
         if id then
@@ -220,7 +216,7 @@ function FadeOutCaption(id, duration)
     end
 end
 
-function NoBlock(f)
+function SOP.NoBlock(f)
     return function(...)
         local event = f(...)
         event.IsBlocking = function()
@@ -230,14 +226,14 @@ function NoBlock(f)
     end
 end
 
-function KillState(id)
+function SOP.KillState(id)
     return function(storyboard)
         storyboard:RemoveState(id)
         return EmptyEvent
     end
 end
 
-function Scene(params)
+function SOP.Scene(params)
     return function(storyboard)
         local id = params.name or params.map
         local map = MapDB[params.map]()
@@ -252,7 +248,7 @@ function Scene(params)
 
         -- Allows the following instruction to be carried out
         -- on the same frame.
-        return NoBlock(Wait(0.1))()
+        return SOP.NoBlock(SOP.Wait(0.1))()
     end
 end
 
@@ -263,7 +259,7 @@ function GetMapRef(storyboard, stateId)
     return exploreState.mMap
 end
 
-function ReplaceScene(name, params)
+function SOP.ReplaceScene(name, params)
     return function(storyboard)
         local state = storyboard.mStates[name]
 
@@ -275,7 +271,8 @@ function ReplaceScene(name, params)
         local mapDef = MapDB[params.map]()
         state.mMap =  Map:Create(mapDef)
 
-        state.mMap:GoToTile(params.focusX, params.focusY)
+        state.mMap:GotoTile(params.focusX, params.focusY)
+        state.mHero = Character:Create(gCharacters.hero, state.mMap)
         state.mHero.mEntity:SetTilePos(
             params.focusX,
             params.focusY,
@@ -288,11 +285,11 @@ function ReplaceScene(name, params)
             state:ShowHero()
         end
 
-        return NoBlock(Wait(0.1))()
+        return SOP.NoBlock(SOP.Wait(0.1))()
     end
 end
 
-function Say(mapId, npcId, text, time, params)
+function SOP.Say(mapId, npcId, text, time, params)
 
     time = time or 1
     params = params or {textScale = 0.8}
@@ -313,7 +310,7 @@ function Say(mapId, npcId, text, time, params)
     end
 end
 
-function RunAction(actionId, actionParams, paramOps)
+function SOP.RunAction(actionId, actionParams, paramOps)
 
     local action = Actions[actionId]
     assert(action)
@@ -325,6 +322,7 @@ function RunAction(actionId, actionParams, paramOps)
         --
         paramOps = paramOps or {}
 
+        Apply(paramOps, print, pairs)
         for k, op in pairs(paramOps) do
             if op then
                 print(k, op)
@@ -339,7 +337,7 @@ function RunAction(actionId, actionParams, paramOps)
     end
 end
 
-function MoveNPC(id, mapId, path)
+function SOP.MoveNPC(id, mapId, path)
     return function(storyboard)
         local map = GetMapRef(storyboard, mapId)
         local npc = map.mNPCbyId[id]
@@ -351,11 +349,12 @@ function MoveNPC(id, mapId, path)
     end
 end
 
-function HandOff(mapId)
+function SOP.HandOff(mapId)
     return function(storyboard)
         local exploreState = storyboard.mStates[mapId]
         storyboard.mStack:Pop() -- remove storyboard from the top of the stack
         storyboard.mStack:Push(exploreState)
+        exploreState.mStack = gStack
         return EmptyEvent
     end
 end

@@ -1,4 +1,5 @@
-----------------------
+--[[
+--------------------
 -- How to make an RPG Example 1
 --
 -- Dustin Heyden
@@ -8,112 +9,106 @@
 --
 -- Description:
 --
-----------------------
+-------------------]]
 
 LoadLibrary('Asset')
 Asset.Run('Dependencies.lua')
 
+--[[
+local mapDef = CreateMap()
+mapDef.on_wake = {}
+madDef.actions = {}
+mapDef.trigger_types - {}
+mapDef.triggers = {}
+]]
+
+
 gRenderer = Renderer.Create()
+gStack = StateStack:Create()
+gWorld = World:Create()
+gIcons = Icons:Create(Texture.Find("inventory_icons.png"))
 
---local mapDef = CreateMap()
---mapDef.on_wake = {}
---mapDef.actions = {}
---mapDef.trigger_types = {}
---mapDef.triggers = {}
-
--- 11, 3, 1 == x, y, layer
-
-local stack = StateStack:Create()
-
--- ******** For the menu/explore state ********
---local explore = ExploreState:Create(stack, mapDef, Vector.Create(11, 3, 1))
---local menu = InGameMenuState:Create(stack)
-
--- ******** For the menu stuff ********
---gWorld = World:Create()
---gIcons = Icons:Create(Texture.Find("inventory_icons.png"))
---stack:Push(explore)
---stack:Push(menu)
+CaptionStyles['default']:Render(gRenderer, "test")
 
 local intro =
 {
-    Scene
+    SOP.Scene
     {
         map = "player_house",
         focusX = 14,
         focusY = 19,
         hideHero = true,
     },
-    BlackScreen(),
-    RunAction("AddNPC",
-              {"player_house", { def = "sleeper", id="sleeper", x = 14, y = 19}},
-              {GetMapRef}),
-    Play("rain"),
-    NoBlock(
-        FadeSound("rain", 0, 1, 3)
-    ),
-    Caption("place", "title", "Village of Sontos"),
-    Caption("time", "subtitle", "MIDNIGHT"),
-    Wait(2),
-    NoBlock(
-        FadeOutCaption("place", 3)
-    ),
-    FadeOutCaption("time", 3),
+    SOP.BlackScreen(),
+    -- SOP.RunAction("AddNPC",
+    --           {"player_house", { def = "sleeper", id="sleeper", x = 25, y = 26}},
+    --           {GetMapRef}),
+    -- SOP.Play("rain"),
+    -- SOP.NoBlock(
+    --     SOP.FadeSound("rain", 0, 1, 3)
+    -- ),
+    -- SOP.Caption("place", "title", "Village of Sontos"),
+    -- SOP.Caption("time", "subtitle", "MIDNIGHT"),
+    -- SOP.Wait(2),
+    -- SOP.NoBlock(
+    --         SOP.FadeOutCaption("place", 3)
+    -- ),
+    -- SOP.FadeOutCaption("time", 3),
 
-    KillState("place"),
-    KillState("time"),
-    FadeOutScreen(),
-    Wait(2),
-    FadeInScreen(),
-    RunAction("AddNPC",
-        {"player_house", { def = "guard", id = "guard1", x = 16, y = 22}},
-        {GetMapRef}),
-    Wait(1),
-    Play("door_break"),
-    NoBlock(FadeOutScreen()),
-    MoveNPC("guard1", "player_house",
-        {
-            "up", "up",
-            "left", "left", "left",
-        }),
-    Wait(1),
-    Say("player_house", "guard1", "Found you!", 2.5),
-    Wait(1),
-    Say("player_house", "guard1", "You're coming with me.", 3),
-    FadeInScreen(),
+    -- SOP.KillState("place"),
+    -- SOP.KillState("time"),
+    -- SOP.FadeOutScreen(),
+    -- SOP.Wait(2),
+    -- SOP.FadeInScreen(),
+    -- SOP.RunAction("AddNPC",
+    --      {"player_house", { def = "guard", id = "guard1", x = 30, y = 28}},
+    --      {GetMapRef}),
+    -- SOP.Wait(1),
+    -- SOP.Play("door_break"),
+    -- SOP.NoBlock(SOP.FadeOutScreen()),
+    -- SOP.MoveNPC("guard1", "player_house",
+    --     {
+    --         "up", "up",
+    --         "left", "left", "left",
+    --     }),
+    -- SOP.Wait(1),
+    -- SOP.Say("player_house", "guard1", "Found you!", 2.5),
+    -- SOP.Wait(1),
+    -- SOP.Say("player_house", "guard1", "You're coming with me.", 3),
+    -- SOP.FadeInScreen(),
 
-    -- Kidnap
-    NoBlock(Play("bell")),
-    Wait(2.5),
-    NoBlock(Play("bell", "bell2")),
-    FadeSound("bell", 1, 0, 0.2),
-    FadeSound("rain", 1, 0, 1),
-    Play("wagon"),
-    NoBlock(
-        FadeSound("wagon", 0, 1, 2)
-    ),
-    Play("wind"),
-    NoBlock(
-        FadeSound("wind", 0, 1, 2)
-    ),
-    Wait(3),
-    Caption("time_passes", "title", "Two days later..."),
-    Wait(1),
-    FadeOutCaption("time_passes", 3),
-    KillState("time_passes"),
-    NoBlock(
-        FadeSound("wind", 1, 0, 1)
-    ),
-    NoBlock(
-        FadeSound("wagon", 1, 0, 1)
-    ),
-    Wait(2),
-    Caption("place", "title", "Unknown Dungeon"),
-    Wait(2),
-    FadeOutCaption("place", 3),
-    KillState("place"),
+    -- -- Kidnap
+    -- SOP.NoBlock(SOP.Play("bell")),
+    -- SOP.Wait(2.5),
+    -- SOP.NoBlock(SOP.Play("bell", "bell2")),
+    -- SOP.FadeSound("bell", 1, 0, 0.2),
+    -- SOP.FadeSound("rain", 1, 0, 1),
+    -- SOP.Play("wagon"),
+    -- SOP.NoBlock(
+    --         SOP.FadeSound("wagon", 0, 1, 2)
+    -- ),
+    -- SOP.Play("wind"),
+    -- SOP.NoBlock(
+    --     SOP.FadeSound("wind", 0, 1, 2)
+    -- ),
+    -- SOP.Wait(3),
+    -- SOP.Caption("time_passes", "title", "Two days later..."),
+    -- SOP.Wait(1),
+    -- SOP.FadeOutCaption("time_passes", 3),
+    -- SOP.KillState("time_passes"),
+    -- SOP.NoBlock(
+    --     SOP.FadeSound("wind", 1, 0, 1)
+    -- ),
+    -- SOP.NoBlock(
+    --     SOP.FadeSound("wagon", 1, 0, 1)
+    -- ),
+    -- SOP.Wait(2),
+    -- SOP.Caption("place", "title", "Unknown Dungeon"),
+    -- SOP.Wait(2),
+    -- SOP.FadeOutCaption("place", 3),
+    -- SOP.KillState("place"),
 
-    ReplaceScene(
+    SOP.ReplaceScene(
         "player_house",
         {
             map = "jail",
@@ -121,19 +116,18 @@ local intro =
             focusY = 11,
             hideHero = false
         }),
-    FadeOutScreen(),
-    Wait(0.5),
-    Say("jail", "hero", "Where am I?", 3),
-    Wait(1),
-    HandOff("jail")
+    -- SOP.FadeOutScreen(),
+    -- SOP.Wait(0.5),
+    -- SOP.Say("jail", "hero", "Where am I?", 3),
+    -- SOP.Wait(1),
+    SOP.HandOff("jail")
 }
-local storyboard = Storyboard:Create(stack, intro)
-stack:Push(storyboard)
-
+local storyboard = Storyboard:Create(gStack, intro)
+gStack:Push(storyboard)
 
 function update()
     local dt = GetDeltaTime()
-    stack:Update(dt)
-    stack:Render(gRenderer)
-    --gWorld:Update(dt)
+    gStack:Update(dt)
+    gStack:Render(gRenderer)
+    gWorld:Update(dt)
 end

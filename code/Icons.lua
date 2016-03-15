@@ -1,6 +1,6 @@
+
 Icons = {}
 Icons.__index = Icons
-
 function Icons:Create(texture)
     local this =
     {

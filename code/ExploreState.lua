@@ -14,7 +14,7 @@ function ExploreState:Create(stack, mapDef, startPos)
         startPos:X(),
         startPos:Y(),
         startPos:Z(), this.mMap)
-    this.mMap:GoToTile(startPos:X(), startPos:Y())
+    this.mMap:GotoTile(startPos:X(), startPos:Y())
 
     setmetatable(this, self)
     return this
@@ -89,9 +89,9 @@ function ExploreState:HandleInput()
         -- which way is the player facing?
         local x, y = self.mHero:GetFacedTileCoords()
         local layer = self.mHero.mEntity.mLayer
-        local trigger = self.mMap:GetTrigger(layer, x, y)
+        local trigger = self.mMap:GetTrigger(x, y, layer)
         if trigger then
-            trigger:OnUse(self.mHero)
+            trigger:OnUse(self.mHero, x, y, layer)
         end
     end
 

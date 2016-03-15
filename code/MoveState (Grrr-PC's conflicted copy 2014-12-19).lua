@@ -13,8 +13,11 @@ function MoveState:Create(character, map)
         mTween = Tween:Create(0, 0, 1),
         mMoveSpeed = 0.3,
 
+        mAnimSpeed = 0.09,
+        mAnimIndex = 1,
+        mAnimTime = 0,
     }
-    this.mAnim = Animation:Create({ this.mEntity.mStartFrame })
+    this.mAnimSet = { this.mEntity.mStartFrame }
 
     setmetatable(this, self)
     return this
@@ -22,23 +25,19 @@ end
 
 function MoveState:Enter(data)
 
-    local frames = nil
-
-    if data.x == 1 then
-        frames = self.mCharacter.mAnims.right
+    if data.x == -1 then
+        self.mAnimSet = self.mCharacter.mAnims.right
         self.mCharacter.mFacing = "right"
-    elseif data.x == -1 then
-        frames = self.mCharacter.mAnims.left
+    elseif data.x == 1 then
+        self.mAnimSet = self.mCharacter.mAnims.left
         self.mCharacter.mFacing = "left"
     elseif data.y == -1 then
-        frames = self.mCharacter.mAnims.up
+        self.mAnimSet = self.mCharacter.mAnims.up
         self.mCharacter.mFacing = "up"
     elseif data.y == 1 then
-        frames = self.mCharacter.mAnims.down
+        self.mAnimSet = self.mCharacter.mAnims.down
         self.mCharacter.mFacing = "down"
     end
-
-    self.mAnim:SetFrames(frames)
 
     self.mMoveX = data.x
     self.mMoveY = data.y
@@ -52,7 +51,7 @@ function MoveState:Enter(data)
     if self.mMap:IsBlocked(1, targetX, targetY) then
         self.mMoveX = 0
         self.mMoveY = 0
-        self.mEntity:SetFrame(self.mAnim:Frame())
+        self.mEntity:SetFrame(self.mAnimSet[self.mAnimIndex])
         self.mController:Change(self.mCharacter.mDefaultState)
         return
     end
@@ -94,17 +93,22 @@ function MoveState:Render(renderer) end
 
 function MoveState:Update(dt)
 
-    self.mAnim:Update(dt)
-    self.mEntity:SetFrame(self.mAnim:Frame())
+    self.mAnimTime = self.mAnimTime + dt
+    if self.mAnimTime >= self.mAnimSpeed then
+        self.mAnimIndex = self.mAnimIndex + 1
+        self.mAnimTime = 0
+        if self.mAnimIndex > #self.mAnimSet then
+            self.mAnimIndex = 1
+        end
+        self.mEntity:SetFrame(self.mAnimSet[self.mAnimIndex])
+    end
 
     self.mTween:Update(dt)
 
     local value = self.mTween:Value()
     local x = self.mPixelX + (value * self.mMoveX)
     local y = self.mPixelY - (value * self.mMoveY)
-    self.mEntity.mX = math.floor(x)
-self.mEntity.mY = math.floor(y)
-self.mEntity.mSprite:SetPosition(self.mEntity.mX , self.mEntity.mY)
+    self.mEntity.mSprite:SetPosition(math.floor(x), math.floor(y))
 
     if self.mTween:IsFinished() then
         self.mController:Change(self.mCharacter.mDefaultState)

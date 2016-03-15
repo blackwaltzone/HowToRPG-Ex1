@@ -5,7 +5,6 @@ function Map:Create(mapDef)
     local layer = mapDef.layers[1]
     local this =
     {
-
         mX = 0,
         mY = 0,
         mMapDef = mapDef,
@@ -22,7 +21,7 @@ function Map:Create(mapDef)
         mTriggers = {},
         mEntities = {},
         mNPCs = {},
-        mNPCbyId = {},
+        mNPCbyId = {}
     }
     this.mTileSprite:SetTexture(this.mTextureAtlas)
 
@@ -68,7 +67,6 @@ function Map:Create(mapDef)
     for k, v in pairs(mapDef.trigger_types or {}) do
         local triggerParams = {}
         for callback, action in pairs(v) do
-            print(callback, action)
             triggerParams[callback] = this.mActions[action]
             assert(triggerParams[callback])
         end
@@ -83,18 +81,7 @@ function Map:Create(mapDef)
     --
     this.mTriggers = {}
     for k, v in ipairs(mapDef.triggers) do
-        local x = v.x
-        local y = v.y
-        local layer = v.layer or 1
-
-        if not this.mTriggers[layer] then
-            this.mTriggers[layer] = {}
-        end
-
-        local targetLayer = this.mTriggers[layer]
-        local trigger = this.mTriggerTypes[v.trigger]
-        assert(trigger)
-        targetLayer[this:CoordToIndex(x, y)] = trigger
+        this:AddTrigger(v)
     end
 
     for _, v in ipairs(mapDef.on_wake or {}) do
@@ -103,6 +90,23 @@ function Map:Create(mapDef)
     end
 
     return this
+end
+
+function Map:AddTrigger(def)
+    local x = def.x
+    local y = def.y
+    local layer = def.layer or 1
+
+    if not self.mTriggers[layer] then
+        self.mTriggers[layer] = {}
+    end
+
+    local targetLayer = self.mTriggers[layer]
+    local trigger = self.mTriggerTypes[def.trigger]
+    assert(trigger)
+    targetLayer[self:CoordToIndex(x, y)] = trigger
+    print("Add trigger", x, y)
+    print("Trigger", self:GetTrigger(x, y, layer))
 end
 
 function Map:GetEntity(x, y, layer)
@@ -144,8 +148,37 @@ function Map:GetTile(x, y, layer)
     return tiles[self:CoordToIndex(x, y)]
 end
 
-function Map:GetTrigger(layer, x, y)
-    -- Get the triggers on the same layer as the entity
+function Map:WriteTile(params)
+    local layer = params.layer or 1
+    local detail = params.detail or 0
+
+    -- Each layer is 3 of parts
+    layer = ((layer - 1) * 3) + 1
+
+    local x = params.x
+    local y = params.y
+    local tile = params.tile
+    local collision = self.mBlockingTile
+    if not params.collision then
+        collision = 0
+    end
+
+    local index = self:CoordToIndex(x, y)
+    local tiles = self.mMapDef.layers[layer].data
+    tiles[index] = tile
+
+    -- Detail
+    tiles = self.mMapDef.layers[layer + 1].data
+    tiles[index] = detail
+
+    -- Collision
+    tiles = self.mMapDef.layers[layer + 2].data
+    tiles[index] = collision
+
+end
+
+function Map:GetTrigger(x, y, layer)
+    layer = layer or 1
     local triggers = self.mTriggers[layer]
 
     if not triggers then
@@ -154,6 +187,15 @@ function Map:GetTrigger(layer, x, y)
 
     local index = self:CoordToIndex(x, y)
     return triggers[index]
+end
+
+function Map:RemoveTrigger(x, y, layer)
+    layer = layer or 1
+    assert(self.mTriggers[layer])
+    local triggers = self.mTriggers[layer]
+    local index = self:CoordToIndex(x, y)
+    assert(triggers[index])
+    triggers[index] = nil
 end
 
 function Map:CoordToIndex(x, y)
@@ -175,7 +217,8 @@ function Map:GetTileFoot(x, y)
             self.mY - (y * self.mTileHeight) - self.mTileHeight / 2
 end
 
-function Map:GoToTile(x, y)
+function Map:GotoTile(x, y)
+    print("Goto tile:", x, y)
     self:Goto((x * self.mTileWidth) + self.mTileWidth/2,
               (y * self.mTileHeight) + self.mTileHeight/2)
 end
@@ -268,8 +311,6 @@ function Map:RenderLayer(renderer, layer, hero)
 
         table.sort(drawList, function(a, b) return a.mTileY < b.mTileY end)
         for _, j in ipairs(drawList) do
-            --renderer:DrawSprite(j.mSprite)
-            -- sprites are now responsible for rendering themselves
             j:Render(renderer)
         end
     end

@@ -159,7 +159,6 @@ end
 function Selection:MoveRight()
     self.mFocusX = math.min(self.mFocusX + 1, self.mColumns)
 end
-
 function Selection:OnClick()
     local index = self:GetIndex()
     self.OnSelection(index, self.mDataSource[index])

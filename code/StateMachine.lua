@@ -38,33 +38,33 @@ StateMachine.__index = StateMachine
 function StateMachine:Create(states)
 	local this =
 	{
-		empty =
+		mEmpty =
 		{
 			Render = function() end,
 			Update = function() end,
 			Enter = function() end,
 			Exit = function() end
 		},
-		states = states or {}, -- [name] -> [function that returns state]
-		current = nil,
+		mStates = states or {}, -- [name] -> [function that returns state]
+		mCurrent = nil,
 	}
 
-	this.current = this.empty
+	this.mCurrent = this.mEmpty
 	setmetatable(this, self)
 	return this
 end
 
 function StateMachine:Change(stateName, enterParams)
-	assert(self.states[stateName]) -- state must exist!
-	self.current:Exit()
-	self.current = self.states[stateName]()
-	self.current:Enter(enterParams)
+	assert(self.mStates[stateName]) -- state must exist!
+	self.mCurrent:Exit()
+	self.mCurrent = self.mStates[stateName]()
+	self.mCurrent:Enter(enterParams)
 end
 
 function StateMachine:Update(dt)
-	self.current:Update(dt)
+	self.mCurrent:Update(dt)
 end
 
 function StateMachine:Render(renderer)
-	self.current:Render(renderer)
+	self.mCurrent:Render(renderer)
 end

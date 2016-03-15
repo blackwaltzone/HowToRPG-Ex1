@@ -19,11 +19,7 @@ function PlanStrollState:Create(character, map)
     return this
 end
 
-function PlanStrollState:Enter()
-    self.mFrameCount = 0
-    self.mCountDown = math.random(0, 3)
-end
-
+function PlanStrollState:Enter() end
 function PlanStrollState:Exit() end
 
 function PlanStrollState:Update(dt)

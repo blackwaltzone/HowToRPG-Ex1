@@ -1,6 +1,6 @@
+
 Storyboard = {}
 Storyboard.__index = Storyboard
-
 function Storyboard:Create(stack, events)
     local this =
     {
@@ -15,9 +15,8 @@ function Storyboard:Create(stack, events)
     return this
 end
 
-function Storyboard:Enter() end
-function Storyboard:HandleInput() end
-
+function Storyboard:Enter()
+end
 
 function Storyboard:Exit()
     for k, v in pairs(self.mPlayingSounds) do
@@ -74,6 +73,9 @@ function Storyboard:Render(renderer)
     self.mSubStack:Render(renderer)
     --local debugText = string.format("Events Stack: %d", #self.mEvents)
     --renderer:DrawText2d(0, 0, debugText)
+end
+
+function Storyboard:HandleInput()
 end
 
 function Storyboard:PushState(id, state)

@@ -28,7 +28,6 @@ function Animation:Update(dt)
         self.mIndex = self.mIndex + 1
         self.mTime = 0
 
-
         if self.mIndex > #self.mFrames then
 
             if self.mLoop then

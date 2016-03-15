@@ -20,7 +20,6 @@ function WaitState:Enter(data)
     self.mFrameCount = 0
 end
 
-
 function WaitState:Render(renderer) end
 function WaitState:Exit() end
 

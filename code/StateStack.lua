@@ -172,6 +172,7 @@ function StateStack:PushFix(renderer, x, y, width, height, text, params)
         children = children,
         wrap = wrap,
         selectionMenu = selectionMenu,
+        OnFinish = params.OnFinish,
         stack = self,
     }
     table.insert(self.mStates, textbox)

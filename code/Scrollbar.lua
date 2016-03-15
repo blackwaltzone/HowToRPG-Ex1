@@ -26,7 +26,7 @@ function Scrollbar:Create(texture, height)
     this.mCaretSprite:SetTexture(texture)
     -- There are expected to be 4 equally sized pieces
     -- that make up a scrollbar.
-    this.mTileHeight = texHeight / 4
+    this.mTileHeight = texHeight/4
     this.mUVs = GenerateUVs(texWidth, this.mTileHeight, texture)
     this.mUpSprite:SetUVs(unpack(this.mUVs[1]))
     this.mCaretSprite:SetUVs(unpack(this.mUVs[2]))
@@ -83,7 +83,7 @@ end
 
 
 function Scrollbar:SetScrollCaretScale(normalValue)
-    self.mCaretSize = ((self.mLineHeight) * normalValue) / self.mTileHeight
+    self.mCaretSize = ((self.mLineHeight )*normalValue)/self.mTileHeight
     --print('cSize', normalValue, self.mCaretSize, self.mLineHeight - self.mTileHeight)
 
     -- Don't let it go below 1
