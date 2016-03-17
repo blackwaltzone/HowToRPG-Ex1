@@ -45,6 +45,10 @@ manifest =
         {
             path = "code/FollowPathState.lua"
         },
+        ['GameOverState.lua'] =
+        {
+            path = "code/GameOverState.lua"
+        },
         ['ItemMenuState.lua'] =
         {
             path = "code/ItemMenuState.lua"
@@ -129,6 +133,10 @@ manifest =
         {
             path = "code/StateStack.lua"
         },
+        ['map_sewer.lua'] =
+        {
+            path = "code/map_sewer.lua"
+        },
         ['Storyboard.lua'] =
         {
             path = "code/Storyboard.lua"
@@ -140,6 +148,10 @@ manifest =
         ['Textbox.lua'] =
         {
             path = "code/Textbox.lua"
+        },
+        ['TitleScreenState.lua'] =
+        {
+            path = "code/TitleScreenState.lua"
         },
         ['Trigger.lua'] =
         {
@@ -172,14 +184,6 @@ manifest =
         {
             path = "art/walk_cycle.png",
         },
-        ['tileset_sontos_house.png'] =
-        {
-            path = "art/tileset_sontos_house.png",
-        },
-        ['tileset_jail.png'] =
-        {
-            path = "art/tileset_jail.png",
-        },
         ['cursor.png'] =
         {
             path = "art/cursor.png",
@@ -200,10 +204,27 @@ manifest =
         {
             path = "art/inventory_icons.png",
         },
+        ['tileset_sontos_house.png'] =
+        {
+            path = "art/tileset_sontos_house.png",
+        },
         ['sleeping.png'] =
         {
             path = "art/sleeping.png",
-        }
+        },
+        ['tileset_jail.png'] =
+        {
+            path = "art/tileset_jail.png",
+        },
+        ['tileset_sewer.png'] =
+        {
+            path = "art/tileset_sewer.png",
+        },
+        ['title_screen.png'] =
+        {
+            path = "art/title_screen.png",
+        },
+
     },
     ['fonts'] =
     {
@@ -257,6 +278,10 @@ manifest =
         ['reveal'] =
         {
             path = "sound/reveal.wav"
+        },
+        ['unlock'] =
+        {
+            path = "sound/unlock.wav"
         }
     }
 }
