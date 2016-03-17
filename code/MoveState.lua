@@ -80,9 +80,9 @@ end
 
 function MoveState:Exit()
 
-    local x = self.mEntity.mLayer
-    local y = self.mEntity.mTileX
-    local layer = self.mEntity.mTileY
+    local x = self.mEntity.mTileX
+    local y = self.mEntity.mTileY
+    local layer = self.mEntity.mLayer
     local trigger = self.mMap:GetTrigger(x, y, layer)
     if trigger then
         trigger:OnEnter(self.mEntity, x, y, layer)

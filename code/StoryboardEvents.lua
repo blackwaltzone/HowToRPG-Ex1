@@ -110,9 +110,10 @@ end
 
 local EmptyEvent = WaitEvent:Create(0)
 
-function SOP.BlackScreen(id)
+function SOP.BlackScreen(id, alpha)
 
     id = id or "blackscreen"
+    local black = Vector.Create(0, 0, 0, alpha or 1)
 
     return function(storyboard)
         local screen = ScreenState:Create(black)
@@ -136,6 +137,65 @@ function SOP.Stop(name)
     return function(storyboard)
         storyboard:StopSound(name)
         return EmptyEvent
+    end
+end
+
+function SOP.FadeOutChar(mapId, npcId, duration)
+
+    duration = duration or 1
+
+    return function(storyboard)
+
+        local map = GetMapRef(storyboard, mapId)
+        local npc = map.mNPCbyId[npcId]
+        if npcId == "hero" then
+           npc = storyboard.mStates[mapId].mHero
+        end
+
+        return TweenEvent:Create(
+            Tween:Create(1, 0, duration),
+            npc.mEntity.mSprite,
+            function(target, value)
+                local c = target:GetColor()
+                c:SetW(value)
+                target:SetColor(c)
+            end)
+    end
+end
+
+function SOP.WriteTile(mapId, writeParams)
+    return function(storyboard)
+        local map = GetMapRef(storyboard, mapId)
+        map:WriteTile(writeParams)
+        return EmptyEvent
+    end
+end
+
+function SOP.MoveCamToTile(stateId, tileX, tileY, duration)
+
+    duration = duration or 1
+
+    return function(storyboard)
+
+        local state = storyboard.mStates[stateId]
+        state:SetFollowCam(false)
+        local startX = state.mManualCamX
+        local startY = state.mManualCamY
+        local endX, endY = state.mMap:GetTileFoot(tileX, tileY)
+        local xDistance = endX - startX
+        local yDistance = endY - startY
+
+
+        return TweenEvent:Create(
+            Tween:Create(0, 1, duration, Tween.EaseOutQuad),
+            state,
+            function(target, value)
+                local dX = startX + (xDistance * value)
+                local dY = startY + (yDistance * value)
+
+                state.mManualCamX = dX
+                state.mManualCamY = dY
+            end)
     end
 end
 
@@ -255,6 +315,9 @@ end
 
 function GetMapRef(storyboard, stateId)
     local exploreState = storyboard.mStates[stateId]
+    if not exploreState.mMap then
+        Apply(exploreState, print, pairs)
+    end
     assert(exploreState and exploreState.mMap)
     return exploreState.mMap
 end
@@ -262,6 +325,11 @@ end
 function SOP.ReplaceScene(name, params)
     return function(storyboard)
         local state = storyboard.mStates[name]
+
+        if state == nil then
+            print('couldnt find state to switch to')
+            assert(false)
+        end
 
         -- Give the state an updated name
         local id = params.name or params.map
@@ -278,6 +346,7 @@ function SOP.ReplaceScene(name, params)
             params.focusY,
             params.focusZ or 1,
             state.mMap)
+        state:SetFollowCam(true, state.mHero)
 
         if params.hideHero then
             state:HideHero()

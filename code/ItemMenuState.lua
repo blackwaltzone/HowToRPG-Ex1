@@ -89,20 +89,20 @@ function ItemMenuState:Render(renderer)
 
     local titleX = self.mLayout:MidX("title")
     local titleY = self.mLayout:MidY("title")
-    renderer:ScaleText(1.5, 1.5)
+    renderer:ScaleText(self.mParent.mTitleSize, self. mParent.mTitleSize)
     renderer:AlignText("center", "center")
     renderer:DrawText2d(titleX, titleY, "Items")
 
     renderer:AlignText("left", "center")
     local categoryX = self.mLayout:Left("category") + 5
     local categoryY = self.mLayout:MidY("category")
-    renderer:ScaleText(1.5, 1.5)
+    renderer:ScaleText(self.mParent.mTitleSize, self. mParent.mTitleSize)
     self.mCategoryMenu:Render(renderer)
     self.mCategoryMenu:SetPosition(categoryX, categoryY)
 
     local descX = self.mLayout:Left("mid") + 10
     local descY = self.mLayout:MidY("mid")
-    renderer:ScaleText(1, 1)
+    renderer:ScaleText(self.mParent.mTextSize, self. mParent.mTextSize)
 
     local menu = self.mItemMenus[self.mCategoryMenu:GetIndex()]
 

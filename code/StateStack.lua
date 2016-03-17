@@ -61,6 +61,7 @@ function StateStack:PushFix(renderer, x, y, width, height, text, params)
     local choices = params.choices
 
     local padding = 10
+    local titlePadY = params.titlePadY or 10
     local textScale = params.textScale or 1.5
     local panelTileSize = 3
 
@@ -104,14 +105,14 @@ function StateStack:PushFix(renderer, x, y, width, height, text, params)
     if title then
         -- adjust the top
         local size = renderer:MeasureText(title, wrap)
-        boundsTop = size:Y() + padding * 2
+        boundsTop = size:Y() + padding * 2 + titlePadY
 
         table.insert(children,
         {
             type = "text",
             text = title,
             x = 0,
-            y = size:Y() + padding
+            y = size:Y() + padding + titlePadY
         })
     end
 
@@ -186,6 +187,7 @@ function StateStack:PushFit(renderer, x, y, text, wrap, params)
     local avatar = params.avatar
 
     local padding = 10
+    local titlePadY = params.titlePadY or 10
     local panelTileSize = 3
     local textScale = params.textScale or 1.5
 
@@ -209,7 +211,7 @@ function StateStack:PushFit(renderer, x, y, text, wrap, params)
 
     if title then
         local size = renderer:MeasureText(title, wrap)
-        height = height + size:Y() + padding
+        height = height + size:Y() + titlePadY
         width = math.max(width, size:X() + padding * 2)
     end
 

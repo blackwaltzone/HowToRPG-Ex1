@@ -1,7 +1,7 @@
 
 Storyboard = {}
 Storyboard.__index = Storyboard
-function Storyboard:Create(stack, events)
+function Storyboard:Create(stack, events, handIn)
     local this =
     {
         mStack = stack,
@@ -12,6 +12,15 @@ function Storyboard:Create(stack, events)
     }
 
     setmetatable(this, self)
+
+    if handIn then
+        local state = this.mStack:Pop()
+        if state.mHero then
+            print("adding active explore state as handin")
+        end
+        this:PushState("handin", state)
+    end
+
     return this
 end
 
